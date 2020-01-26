@@ -1,0 +1,15 @@
+version: '3.7'
+services:
+  backend:
+    volumes:
+      - ../backend:/app
+  frontend:
+    volumes:
+      - ../frontend:/app
+      - frontend_node_modules:/app/node_modules
+  celery_worker:
+    volumes:
+      - ../backend:/app
+
+volumes:
+  frontend_node_modules:

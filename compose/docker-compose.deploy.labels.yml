@@ -1,0 +1,72 @@
+version: '3.7'
+services:
+  proxy:
+    deploy:
+      labels:
+        - traefik.frontend.rule=Host:traefik.${DOMAIN}
+        - traefik.enable=true
+        - traefik.port=8080
+        - traefik.tags=${TRAEFIK_PUBLIC_TAG:-traefik-public}
+        - traefik.docker.network=proxy
+        # Traefik service that listens to HTTP
+        - traefik.redirectorservice.frontend.entryPoints=http
+        - traefik.redirectorservice.frontend.redirect.entryPoint=https
+        # Traefik service that listens to HTTPS
+        - traefik.webservice.frontend.entryPoints=https
+        - traefik.frontend.auth.basic.usersFile=/.htpasswd
+  backend:
+    deploy:
+      labels:
+        - traefik.backend=backend
+        - traefik.frontend.rule=Host:backend.${DOMAIN}
+        - traefik.enable=true
+        - traefik.port=8000
+        - traefik.tags=${TRAEFIK_PUBLIC_TAG:-traefik-public}
+        - traefik.docker.network=proxy
+        # Traefik service that listens to HTTP
+        - traefik.redirectorservice.frontend.entryPoints=http
+        - traefik.redirectorservice.frontend.redirect.entryPoint=https
+        # Traefik service that listens to HTTPS
+        - traefik.webservice.frontend.entryPoints=https
+  frontend:
+    deploy:
+      labels:
+        - traefik.backend=frontend
+        - traefik.frontend.rule=Host:${DOMAIN}
+        - traefik.enable=true
+        - traefik.port=3000
+        - traefik.tags=${TRAEFIK_PUBLIC_TAG:-traefik-public}
+        - traefik.docker.network=proxy
+        # Traefik service that listens to HTTP
+        - traefik.redirectorservice.frontend.entryPoints=http
+        - traefik.redirectorservice.frontend.redirect.entryPoint=https
+        # Traefik service that listens to HTTPS
+        - traefik.webservice.frontend.entryPoints=https
+  grafana:
+    deploy:
+      labels:
+        - traefik.backend=grafana
+        - traefik.frontend.rule=Host:grafana.${DOMAIN}
+        - traefik.enable=true
+        - traefik.port=3000
+        - traefik.tags=${TRAEFIK_PUBLIC_TAG:-traefik-public}
+        - traefik.docker.network=proxy
+        # Traefik service that listens to HTTP
+        - traefik.redirectorservice.frontend.entryPoints=http
+        - traefik.redirectorservice.frontend.redirect.entryPoint=https
+        # Traefik service that listens to HTTPS
+        - traefik.webservice.frontend.entryPoints=https
+  portainer:
+    deploy:
+      labels:
+        - traefik.backend=portainer
+        - traefik.frontend.rule=Host:portainer.${DOMAIN}
+        - traefik.enable=true
+        - traefik.port=9000
+        - traefik.tags=${TRAEFIK_PUBLIC_TAG:-traefik-public}
+        - traefik.docker.network=proxy
+        # Traefik service that listens to HTTP
+        - traefik.redirectorservice.frontend.entryPoints=http
+        - traefik.redirectorservice.frontend.redirect.entryPoint=https
+        # Traefik service that listens to HTTPS
+        - traefik.webservice.frontend.entryPoints=https

@@ -1,0 +1,29 @@
+# Base
+Django==3.0.2
+uvicorn==0.11.2
+gunicorn==20.0.4
+psycopg2==2.8.4
+whitenoise==5.0.1
+
+# Debug
+Werkzeug==0.16.0
+django-extensions==2.2.6
+ptipython==1.0.1
+ptvsd==4.3.2
+
+# Worker
+celery==4.4.0
+django-redis==4.11.0
+redis==3.3.11
+
+# REST
+django-cors-headers==3.2.1
+djangorestframework==3.11.0
+djangorestframework-simplejwt==4.4.0
+git+https://github.com/ankurpandeyvns/django-rest-auth.git@94c8eba02596f0f2e6589a595eba79109dfd126c
+
+# Social auth
+django-allauth==0.41.0
+
+# Monitoring
+django-prometheus==2.0.0

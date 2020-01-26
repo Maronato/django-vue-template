@@ -1,0 +1,66 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    /**
+     * Attaches to the Backend
+     */
+    {
+      "name": "Attach Backend",
+      "type": "python",
+      "request": "attach",
+      "pathMappings": [
+        {
+          "localRoot": "${workspaceFolder}/backend",
+          "remoteRoot": "/app"
+        }
+      ],
+      "port": 7913,
+      "host": "localhost"
+    },
+
+    /**
+     * Launches the Frontend client (chrome)
+     */
+    {
+      "type": "chrome",
+      "userDataDir": false,
+      "request": "launch",
+      "name": "Launch Frontend Client",
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceFolder}/frontend",
+      "sourceMapPathOverrides": {
+        "webpack:///*": "${webRoot}/*"
+      },
+    },
+    
+    /**
+     * Attaches to the Frontend client (chrome)
+     */
+    {
+      "type": "chrome",
+      "request": "attach",
+      "name": "Attach Frontend Client",
+      "port": 9222,
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceFolder}/frontend",
+      "sourceMapPathOverrides": {
+        "webpack:///*": "${webRoot}/*"
+      },
+    },
+
+    /**
+     * Attaches to the Frontend server
+     */
+    {
+      "name": "Attach Frontend Server",
+      "type": "node",
+      "request": "attach",
+      "sourceMaps": true,
+      "localRoot": "${workspaceFolder}/frontend",
+      "remoteRoot": "/app"
+    },
+  ]
+}

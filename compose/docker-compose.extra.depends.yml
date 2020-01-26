@@ -1,0 +1,12 @@
+version: '3.7'
+services:
+  redis-exporter:
+    depends_on:
+      - redis
+      - prometheus
+  exporter:
+    depends_on:
+      - prometheus
+  grafana:
+    depends_on:
+      - prometheus

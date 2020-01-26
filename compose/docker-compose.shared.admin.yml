@@ -1,0 +1,9 @@
+version: '3.7'
+services:
+  celery_worker:
+    command: celery -A backend worker -l info
+  postgres:
+    restart: always
+  redis:
+    restart: always
+    command: "--maxmemory 50mb"

@@ -1,0 +1,13 @@
+version: '3.7'
+services:
+  backend:
+    volumes:
+      - ../backend/.env:/app/.env
+  celery_worker:
+    volumes:
+      - ../backend/.env:/app/.env
+  proxy:
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager

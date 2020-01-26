@@ -1,0 +1,37 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Open backend shell",
+            "type": "shell",
+            "command": "source .env && docker exec -it ${PROJECT_NAME}_backend_1 python manage.py shell_plus",
+            "problemMatcher": []
+        },
+        {
+            "label": "Dev up",
+            "type": "shell",
+            "command": "./scripts/dev.sh",
+            "problemMatcher": []
+        },
+        {
+            "label": "Dev down",
+            "type": "shell",
+            "command": "source .env && docker-compose -p ${PROJECT_NAME} down",
+            "problemMatcher": []
+        },
+        {
+            "label": "Restart backend",
+            "type": "shell",
+            "command": "source .env && docker-compose -p ${PROJECT_NAME} restart backend",
+            "problemMatcher": []
+        },
+        {
+            "label": "Restart frontend",
+            "type": "shell",
+            "command": "source .env && docker-compose -p ${PROJECT_NAME} restart frontend",
+            "problemMatcher": []
+        }
+    ]
+}

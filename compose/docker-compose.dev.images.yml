@@ -1,0 +1,8 @@
+version: '3.7'
+services:
+  backend:
+    image: localhost/${PROJECT_NAME-django_vue}-backend:dev
+  frontend:
+    image: localhost/${PROJECT_NAME-django_vue}-frontend:dev
+  celery_worker:
+    image: localhost/${PROJECT_NAME-django_vue}-worker:dev

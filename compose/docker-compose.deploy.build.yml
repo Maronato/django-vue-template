@@ -1,0 +1,12 @@
+version: '3.7'
+services:
+  backend:
+    build:
+      context: ../backend
+  frontend:
+    build:
+      context: ../frontend
+  celery_worker:
+    build:
+      context: ../backend
+      dockerfile: worker.dockerfile

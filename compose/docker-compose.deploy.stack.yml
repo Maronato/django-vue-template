@@ -1,0 +1,27 @@
+version: '3.7'
+services:
+  portainer:
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+  proxy:
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+  backend:
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+  frontend:
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+  celery_worker:
+    deploy:
+      replicas: 0
+      restart_policy:
+        condition: on-failure
