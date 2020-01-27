@@ -18,6 +18,24 @@ services:
         - traefik.http.routers.grafana.tls.certresolver=le
         # Accept only https
         - traefik.http.routers.grafana.entrypoints=websecure
+  prometheus:
+    deploy:
+      labels:
+        # Enable traefik
+        - traefik.enable=true
+        # Traefik constraints
+        - traefik.tags=traefik-public
+        # Use the proxy network for communication
+        - traefik.docker.network=proxy
+        # Prometheus should live under prometheus.DOMAIN
+        - traefik.http.routers.prometheus.rule=Host(`prometheus.${DOMAIN}`)
+        # Make sure the loadbalancer uses the correct port
+        - traefik.http.services.prometheus.loadbalancer.server.port=9090
+        # Enable tls through Lets Encrypt
+        - traefik.http.routers.prometheus.tls=true
+        - traefik.http.routers.prometheus.tls.certresolver=le
+        # Accept only https
+        - traefik.http.routers.prometheus.entrypoints=websecure
   portainer:
     deploy:
       labels:
