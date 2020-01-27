@@ -7,7 +7,7 @@ import ptvsd
 
 DEBUG = os.environ.get("DEBUG", "True").capitalize() == "True"
 
-if DEBUG and os.environ.get("RUN_MAIN") or os.environ.get("WERKZEUG_RUN_MAIN"):
+if DEBUG and (os.environ.get("RUN_MAIN") or os.environ.get("WERKZEUG_RUN_MAIN")):
     print("Enabling vsc attachment")
     ptvsd.enable_attach(address=("0.0.0.0", 7913))
     print("vsc attachment enabled")
