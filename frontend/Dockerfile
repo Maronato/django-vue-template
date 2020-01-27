@@ -39,7 +39,7 @@ FROM cleanup as prod-prefinal
 RUN yarn build
 
 COPY docker-entrypoint.sh /docker-entrypoint.sh
-CMD ["yarn", "dev"]
+CMD ["yarn", "start"]
 
 FROM ${APP_ENV}-prefinal as final
 
