@@ -1,10 +1,10 @@
-version: '3.7'
+version: "3.7"
 services:
+  proxy:
+    image: traefik:v1.7-alpine
   backend:
-    image: '${IMAGE_DOMAIN-localhost}/${PROJECT_NAME-django_vue}-backend:${TAG-latest}'
+    image: "${IMAGE_DOMAIN-localhost}/${PROJECT_NAME-django_vue}-backend:${TAG-latest}"
   frontend:
-    image: '${IMAGE_DOMAIN-localhost}/${PROJECT_NAME-django_vue}-frontend:${TAG-latest}'
-  celeryworker:
-    image: '${IMAGE_DOMAIN-localhost}/${PROJECT_NAME-django_vue}-worker:${TAG-latest}'
-  celerybeat:
-    image: '${IMAGE_DOMAIN-localhost}/${PROJECT_NAME-django_vue}-worker:${TAG-latest}'
+    image: "${IMAGE_DOMAIN-localhost}/${PROJECT_NAME-django_vue}-frontend:${TAG-latest}"
+  celery_worker:
+    image: "${IMAGE_DOMAIN-localhost}/${PROJECT_NAME-django_vue}-worker:${TAG-latest}"

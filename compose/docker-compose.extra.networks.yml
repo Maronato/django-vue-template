@@ -1,9 +1,5 @@
-version: '3.7'
+version: "3.7"
 services:
-  backend:
-    networks:
-      - default
-      - proxy
   grafana:
     networks:
       - default
@@ -12,19 +8,6 @@ services:
     networks:
       - default
       - proxy
-  proxy:
-    networks:
-      - default
-      - proxy
-  celery_worker:
-    networks:
-      - default
-  postgres:
-    networks:
-      - default
-  redis:
-    networks:
-      - default
   redis-exporter:
     networks:
       - default
@@ -34,8 +17,3 @@ services:
   prometheus:
     networks:
       - default
-
-networks:
-  default:
-  proxy:
-    external: true

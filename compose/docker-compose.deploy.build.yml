@@ -1,12 +1,18 @@
-version: '3.7'
+version: "3.7"
 services:
   backend:
     build:
+      args:
+        APP_ENV: prod
       context: ../backend
   frontend:
     build:
+      args:
+        APP_ENV: prod
       context: ../frontend
   celery_worker:
     build:
+      args:
+        APP_ENV: prod
       context: ../backend
       dockerfile: worker.dockerfile

@@ -1,4 +1,4 @@
-version: '3.7'
+version: "3.7"
 services:
   proxy:
     command: >
@@ -20,6 +20,16 @@ services:
       --accessLog
       --api
   backend:
-    command: ["gunicorn", "backend.asgi:application", "-w", "4", "-k", "uvicorn.workers.UvicornWorker", "--bind", "0.0.0.0:8000"]
+    command:
+      [
+        "gunicorn",
+        "backend.asgi:application",
+        "-w",
+        "4",
+        "-k",
+        "uvicorn.workers.UvicornWorker",
+        "--bind",
+        "0.0.0.0:8000",
+      ]
   frontend:
     command: ["yarn", "start"]

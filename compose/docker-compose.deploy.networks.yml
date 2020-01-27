@@ -1,1 +1,28 @@
-version: '3.7'
+version: "3.7"
+services:
+  backend:
+    networks:
+      - default
+      - proxy
+  frontend:
+    networks:
+      - default
+      - proxy
+  proxy:
+    networks:
+      - default
+      - proxy
+  celery_worker:
+    networks:
+      - default
+  postgres:
+    networks:
+      - default
+  redis:
+    networks:
+      - default
+
+networks:
+  default:
+  proxy:
+    external: true

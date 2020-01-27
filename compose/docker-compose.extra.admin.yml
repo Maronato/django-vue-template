@@ -1,9 +1,9 @@
-version: '3.7'
+version: "3.7"
 services:
   redis-exporter:
     restart: always
     command:
-      - '--redis.addr=redis://redis:6379'
+      - "--redis.addr=redis://redis:6379"
   prometheus:
     restart: always
     build:
