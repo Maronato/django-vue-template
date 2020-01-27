@@ -17,7 +17,7 @@ services:
         # Add Authentication to prevent unauthorized access to the dashboard
         - traefik.http.routers.traefik.middlewares=auth
         # Users and passwords
-        - traefik.http.middlewares.auth.basicauth.users=admin:${TRAEFIK_PASSWORD}
+        - traefik.http.middlewares.auth.basicauth.users=${TRAEFIK_USER_PASSWORD}
         # Dummy service for Swarm port detection. The port can be any valid integer value.
         - traefik.http.services.dummy-svc.loadbalancer.server.port=9999
         # Enable tls through Lets Encrypt
