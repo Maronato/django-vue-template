@@ -1,4 +1,4 @@
-FROM maronato/grafana:latest
+FROM maronato/grafana:6.5.3
 
 # Default datasources
 ADD datasources.yml /etc/grafana/provisioning/datasources/

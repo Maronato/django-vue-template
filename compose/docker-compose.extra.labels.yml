@@ -12,7 +12,7 @@ services:
         # Grafana should live under grafana.DOMAIN
         - traefik.http.routers.grafana.rule=Host(`grafana.${DOMAIN}`)
         # Make sure the loadbalancer uses the correct port
-        - traefik.http.services.grafana-service.loadbalancer.server.port=3000
+        - traefik.http.services.grafana.loadbalancer.server.port=3000
         # Enable tls through Lets Encrypt
         - traefik.http.routers.grafana.tls=true
         - traefik.http.routers.grafana.tls.certresolver=le
@@ -30,7 +30,7 @@ services:
         # Portainer should live under portainer.DOMAIN
         - traefik.http.routers.portainer.rule=Host(`portainer.${DOMAIN}`)
         # Make sure the loadbalancer uses the correct port
-        - traefik.http.services.portainer-service.loadbalancer.server.port=9000
+        - traefik.http.services.portainer.loadbalancer.server.port=9000
         # Enable tls through Lets Encrypt
         - traefik.http.routers.portainer.tls=true
         - traefik.http.routers.portainer.tls.certresolver=le

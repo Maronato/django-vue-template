@@ -1,3 +1,3 @@
-FROM prom/prometheus:v2.10.0
+FROM prom/prometheus:v2.15.2
 ADD prometheus.yml /etc/prometheus/prometheus.yml
 COPY ./rules/ /etc/prometheus/rules/
