@@ -1,1 +1,61 @@
 version: "3.7"
+services:
+  traefik:
+    labels:
+      # Traefik should live under traefik.DOMAIN
+      - traefik.http.routers.traefik.rule=Host(`traefik.${DOMAIN-localhost}`)
+      # Make sure the loadbalancer uses the correct port
+      - traefik.http.services.traefik.loadbalancer.server.port=8080
+      # Register the Dashboard service
+      - traefik.http.routers.traefik.service=api@internal
+      # Development env only uses http
+      - traefik.http.routers.traefik.entrypoints=web
+  backend:
+    labels:
+      # Need to manually define the service since this container creates a service
+      # for itself and another one for the debug port
+      - traefik.http.routers.backend.service=backend
+      # Backend should live under api.DOMAIN
+      - traefik.http.routers.backend.rule=Host(`api.${DOMAIN-localhost}`)
+      # Make sure the loadbalancer uses the correct port
+      - traefik.http.services.backend.loadbalancer.server.port=8000
+      # Development env only uses http
+      - traefik.http.routers.backend.entrypoints=web
+      # Enable debugging through the load balancer
+      - traefik.http.routers.backend-debug.rule=Host(`${DOMAIN-localhost}`)
+      - traefik.http.services.backend-debug.loadbalancer.server.port=7913
+      - traefik.http.routers.backend-debug.entrypoints=backend-debug
+      - traefik.http.routers.backend-debug.service=backend-debug
+
+  frontend:
+    labels:
+      # Need to manually define the service since this container creates a service
+      # for itself and another one for the debug port
+      - traefik.http.routers.frontend.service=frontend
+      # Frontend should live under api.DOMAIN
+      - traefik.http.routers.frontend.rule=Host(`${DOMAIN-localhost}`)
+      # Make sure the loadbalancer uses the correct port
+      - traefik.http.services.frontend.loadbalancer.server.port=3000
+      # Development env only uses http
+      - traefik.http.routers.frontend.entrypoints=web
+      # Enable debugging through the load balancer
+      - traefik.http.routers.frontend-debug.rule=Host(`${DOMAIN-localhost}`)
+      - traefik.http.services.frontend-debug.loadbalancer.server.port=9229
+      - traefik.http.routers.frontend-debug.entrypoints=frontend-debug
+      - traefik.http.routers.frontend-debug.service=frontend-debug
+  postgres:
+    labels:
+      # Allow access to the Postgres instance from outside
+      - traefik.http.routers.postgres.rule=Host(`${DOMAIN-localhost}`)
+      # Make sure the loadbalancer uses the correct port
+      - traefik.http.services.postgres.loadbalancer.server.port=5432
+      # Only access through port 5432
+      - traefik.http.routers.postgres.entrypoints=postgres
+  redis:
+    labels:
+      # Allow access to the Redis instance from outside
+      - traefik.http.routers.redis.rule=Host(`${DOMAIN-localhost}`)
+      # Make sure the loadbalancer uses the correct port
+      - traefik.http.services.redis.loadbalancer.server.port=6379
+      # Only access through port 5432
+      - traefik.http.routers.redis.entrypoints=redis

@@ -3,7 +3,7 @@
 # Exit in case of error
 set -e
 
-source 'env-dev.env'
+source 'env-prod.env'
 source '.env'
 
 source './scripts/generate-stack.sh'

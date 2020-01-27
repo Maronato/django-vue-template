@@ -1,11 +1,5 @@
 version: "3.7"
 services:
-  backend:
+  traefik:
     ports:
-      - "8000:8000"
-      - "7913:7913"
-  frontend:
-    ports:
-      - "3000:3000"
-      - "5858:5858"
-      - "9229:9229"
+      - "80:80"

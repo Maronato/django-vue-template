@@ -1,5 +1,10 @@
 version: "3.7"
 services:
+  traefik:
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ../acme.json:/acme.json
+      - ../.htpasswd:/.htpasswd
   postgres:
     volumes:
       - postgres_data:/var/lib/postgresql/data/pgdata

@@ -1,6 +1,6 @@
 version: "3.7"
 services:
-  proxy:
+  traefik:
     ports:
       - "80:80"
       - "443:443"

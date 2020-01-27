@@ -1,24 +1,21 @@
 version: "3.7"
 services:
-  proxy:
+  traefik:
     command: >
-      --docker
-      --docker.swarmmode
-      --docker.watch
+      --providers.docker.endpoint=tcp://127.0.0.1:2375
+      --providers.docker.swarmMode=true
       --docker.exposedbydefault=false
-      --constraints=tag==traefik-public
-      --entrypoints='Name:http Address::80'
-      --entrypoints='Name:https Address::443 TLS'
-      --acme
-      --acme.email=${EMAIL}
-      --acme.storage="acme.json"
-      --acme.entryPoint=https
-      --acme.httpChallenge.entryPoint=http
-      --acme.onhostrule=true
-      --acme.acmelogging=true
-      --logLevel=INFO
-      --accessLog
-      --api
+      --providers.docker.network=proxy
+      --providers.docker.constraints=Label(`traefik.tags`, `traefik-public`)
+      --accesslog=true
+      --metrics.prometheus=true
+      --api.dashboard=true
+      --entrypoints.web.address=:80
+      --entrypoints.websecure.address=:443
+      --certificatesResolvers.le.acme.email=${EMAIL}
+      --certificatesResolvers.le.acme.storage=acme.json
+      --certificatesResolvers.le.acme.httpChallenge=true
+      --certificatesResolvers.le.acme.httpChallenge.entryPoint=web
   backend:
     command:
       [

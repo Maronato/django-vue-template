@@ -1,7 +1,5 @@
 version: "3.7"
 services:
-  proxy:
-    image: traefik:v1.7-alpine
   backend:
     image: "${IMAGE_DOMAIN-localhost}/${PROJECT_NAME-django_vue}-backend:${TAG-latest}"
   frontend:

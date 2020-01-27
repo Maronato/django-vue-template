@@ -4,15 +4,15 @@ services:
     build:
       context: ../backend
       args:
-        APP_ENV: prod
+        APP_ENV: dev
   frontend:
     build:
       context: ../frontend
       args:
-        APP_ENV: prod
+        APP_ENV: dev
   celery_worker:
     build:
       context: ../backend
       dockerfile: worker.dockerfile
       args:
-        APP_ENV: prod
+        APP_ENV: dev

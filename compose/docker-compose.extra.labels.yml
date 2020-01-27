@@ -3,28 +3,36 @@ services:
   grafana:
     deploy:
       labels:
-        - traefik.backend=grafana
-        - traefik.frontend.rule=Host:grafana.${DOMAIN}
+        # Enable traefik
         - traefik.enable=true
-        - traefik.port=3000
-        - traefik.tags=${TRAEFIK_PUBLIC_TAG:-traefik-public}
+        # Traefik constraints
+        - traefik.tags=traefik-public
+        # Use the proxy network for communication
         - traefik.docker.network=proxy
-        # Traefik service that listens to HTTP
-        - traefik.redirectorservice.frontend.entryPoints=http
-        - traefik.redirectorservice.frontend.redirect.entryPoint=https
-        # Traefik service that listens to HTTPS
-        - traefik.webservice.frontend.entryPoints=https
+        # Grafana should live under grafana.DOMAIN
+        - traefik.http.routers.grafana.rule=Host(`grafana.${DOMAIN}`)
+        # Make sure the loadbalancer uses the correct port
+        - traefik.http.services.grafana-service.loadbalancer.server.port=3000
+        # Enable tls through Lets Encrypt
+        - traefik.http.routers.grafana.tls=true
+        - traefik.http.routers.grafana.tls.certresolver=le
+        # Accept only https
+        - traefik.http.routers.grafana.entrypoints=websecure
   portainer:
     deploy:
       labels:
-        - traefik.backend=portainer
-        - traefik.frontend.rule=Host:portainer.${DOMAIN}
+        # Enable traefik
         - traefik.enable=true
-        - traefik.port=9000
-        - traefik.tags=${TRAEFIK_PUBLIC_TAG:-traefik-public}
+        # Traefik constraints
+        - traefik.tags=traefik-public
+        # Use the proxy network for communication
         - traefik.docker.network=proxy
-        # Traefik service that listens to HTTP
-        - traefik.redirectorservice.frontend.entryPoints=http
-        - traefik.redirectorservice.frontend.redirect.entryPoint=https
-        # Traefik service that listens to HTTPS
-        - traefik.webservice.frontend.entryPoints=https
+        # Portainer should live under portainer.DOMAIN
+        - traefik.http.routers.portainer.rule=Host(`portainer.${DOMAIN}`)
+        # Make sure the loadbalancer uses the correct port
+        - traefik.http.services.portainer-service.loadbalancer.server.port=9000
+        # Enable tls through Lets Encrypt
+        - traefik.http.routers.portainer.tls=true
+        - traefik.http.routers.portainer.tls.certresolver=le
+        # Accept only https
+        - traefik.http.routers.portainer.entrypoints=websecure

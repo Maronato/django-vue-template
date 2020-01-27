@@ -1,45 +1,69 @@
 version: "3.7"
 version: "3.7"
 services:
-  proxy:
+  traefik:
     deploy:
       labels:
-        - traefik.frontend.rule=Host:traefik.${DOMAIN}
+        # Enable traefik
         - traefik.enable=true
-        - traefik.port=8080
-        - traefik.tags=${TRAEFIK_PUBLIC_TAG:-traefik-public}
+        # Traefik constraints
+        - traefik.tags=traefik-public
+        # Use the proxy network for communication
         - traefik.docker.network=proxy
-        # Traefik service that listens to HTTP
-        - traefik.redirectorservice.frontend.entryPoints=http
-        - traefik.redirectorservice.frontend.redirect.entryPoint=https
-        # Traefik service that listens to HTTPS
-        - traefik.webservice.frontend.entryPoints=https
-        - traefik.frontend.auth.basic.usersFile=/.htpasswd
+        # Traefik should live under traefik.DOMAIN
+        - traefik.http.routers.traefik.rule=Host(`traefik.${DOMAIN}`)
+        # Register the Dashboard service
+        - traefik.http.routers.traefik.service=api@internal
+        # Add Authentication to prevent unauthorized access to the dashboard
+        - traefik.http.routers.traefik.middlewares=auth
+        # Users and passwords
+        - traefik.http.middlewares.auth.basicauth.users=admin:${TRAEFIK_PASSWORD}
+        # Dummy service for Swarm port detection. The port can be any valid integer value.
+        - traefik.http.services.dummy-svc.loadbalancer.server.port=9999
+        # Enable tls through Lets Encrypt
+        - traefik.http.routers.traefik.tls=true
+        - traefik.http.routers.traefik.tls.certresolver=le
+        # Configure Traefik to redirect all http requests to https
+        - traefik.http.middlewares.https_redirect.redirectscheme.scheme=https
+        - traefik.http.middlewares.https_redirect.redirectscheme.permanent=true
+        - traefik.http.routers.http_catchall.rule=HostRegexp(`{any:.+}`)
+        - traefik.http.routers.http_catchall.entrypoints=web
+        - traefik.http.routers.http_catchall.middlewares=https_redirect
+        # Accept only https
+        - traefik.http.routers.traefik.entrypoints=websecure
   backend:
     deploy:
       labels:
-        - traefik.backend=backend
-        - traefik.frontend.rule=Host:backend.${DOMAIN}
+        # Enable traefik
         - traefik.enable=true
-        - traefik.port=8000
-        - traefik.tags=${TRAEFIK_PUBLIC_TAG:-traefik-public}
+        # Traefik constraints
+        - traefik.tags=traefik-public
+        # Use the proxy network for communication
         - traefik.docker.network=proxy
-        # Traefik service that listens to HTTP
-        - traefik.redirectorservice.frontend.entryPoints=http
-        - traefik.redirectorservice.frontend.redirect.entryPoint=https
-        # Traefik service that listens to HTTPS
-        - traefik.webservice.frontend.entryPoints=https
+        # Backend should live under api.DOMAIN
+        - traefik.http.routers.backend.rule=Host(`api.${DOMAIN}`)
+        # Make sure the loadbalancer uses the correct port
+        - traefik.http.services.backend-service.loadbalancer.server.port=8000
+        # Enable tls through Lets Encrypt
+        - traefik.http.routers.backend.tls=true
+        - traefik.http.routers.backend.tls.certresolver=le
+        # Accept both http and https
+        - traefik.http.routers.backend.entrypoints=websecure
   frontend:
     deploy:
       labels:
-        - traefik.backend=frontend
-        - traefik.frontend.rule=Host:${DOMAIN}
+        # Enable traefik
         - traefik.enable=true
-        - traefik.port=3000
-        - traefik.tags=${TRAEFIK_PUBLIC_TAG:-traefik-public}
+        # Traefik constraints
+        - traefik.tags=traefik-public
+        # Use the proxy network for communication
         - traefik.docker.network=proxy
-        # Traefik service that listens to HTTP
-        - traefik.redirectorservice.frontend.entryPoints=http
-        - traefik.redirectorservice.frontend.redirect.entryPoint=https
-        # Traefik service that listens to HTTPS
-        - traefik.webservice.frontend.entryPoints=https
+        # Frontend should live under DOMAIN
+        - traefik.http.routers.frontend.rule=Host(`${DOMAIN}`)
+        # Make sure the loadbalancer uses the correct port
+        - traefik.http.services.frontend-service.loadbalancer.server.port=8000
+        # Enable tls through Lets Encrypt
+        - traefik.http.routers.frontend.tls=true
+        - traefik.http.routers.frontend.tls.certresolver=le
+        # Accept both http and https
+        - traefik.http.routers.frontend.entrypoints=websecure

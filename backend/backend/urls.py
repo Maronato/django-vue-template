@@ -36,7 +36,8 @@ api_urlpatterns = [
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("api/", include((api_urlpatterns, "backend-auth"), namespace="api")),
+    # API urls
+    path("", include((api_urlpatterns, "backend-auth"), namespace="api")),
     path("connection_error/", View.as_view(), name="socialaccount_connections"),
     path("", include("django_prometheus.urls")),
 ]
