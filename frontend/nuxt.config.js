@@ -1,4 +1,10 @@
 const colors = require('vuetify/es5/util/colors').default
+const getSecrets = require('./getSecrets')
+
+const socialProviderSecrets = getSecrets({
+  path: process.env.SECRETS_PATH,
+  filename: 'SOCIAL_PROVIDER_SECRETS'
+})
 
 module.exports = {
   mode: 'universal',
@@ -67,8 +73,7 @@ module.exports = {
 
   env: {
     API_URL: process.env.API_URL,
-    API_URL_BROWSER: process.env.API_URL_BROWSER,
-    GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID
+    API_URL_BROWSER: process.env.API_URL_BROWSER
   },
   auth: {
     redirect: {
@@ -82,7 +87,7 @@ module.exports = {
       google: {
         _provider: '~/plugins/auth/providers/google.js',
         scope: ['openid', 'profile', 'email'],
-        client_id: process.env.GOOGLE_CLIENT_ID
+        client_id: socialProviderSecrets.GOOGLE_CLIENT_ID
       }
     }
   },

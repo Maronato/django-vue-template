@@ -12,17 +12,21 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 from datetime import timedelta
+from backend.read_env import read_env
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 SETTINGS_DIR = os.path.dirname(os.path.abspath(__file__))
 BASE_DIR = os.path.dirname(SETTINGS_DIR)
+
+# Get the docker secret
+django_secrets = read_env(os.environ.get("SECRETS_PATH"), "DJANGO_SECRETS")
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("DJANGO_SECRET", "abc123")
+SECRET_KEY = django_secrets.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", "False").capitalize() == "True"

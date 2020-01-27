@@ -27,7 +27,7 @@ if [ "$TAG" != "latest" ]; then
     TAG=$TAG \
     IMAGE_DOMAIN=$IMAGE_DOMAIN \
     PROJECT_NAME=$PROJECT_NAME \
-    TRAEFIK_PASSWORD=$TRAEFIK_PASSWORD \
+    TRAEFIK_USER_PASSWORD=$TRAEFIK_USER_PASSWORD \
     docker-compose $joined config > docker-stack-${TAG}.yml
 fi
 
