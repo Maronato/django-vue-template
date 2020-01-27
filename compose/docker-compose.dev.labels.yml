@@ -22,11 +22,10 @@ services:
       # Development env only uses http
       - traefik.http.routers.backend.entrypoints=web
       # Enable debugging through the load balancer
-      - traefik.http.routers.backend-debug.rule=Host(`${DOMAIN-localhost}`)
-      - traefik.http.services.backend-debug.loadbalancer.server.port=7913
-      - traefik.http.routers.backend-debug.entrypoints=backend-debug
-      - traefik.http.routers.backend-debug.service=backend-debug
-
+      - traefik.tcp.routers.backend.rule=Host(`${DOMAIN-localhost}`)
+      - traefik.tcp.routers.backend.rule=HostSNI(`*`)
+      - traefik.tcp.services.backend.loadbalancer.server.port=7913
+      - traefik.tcp.routers.backend.entrypoints=backend-debug
   frontend:
     labels:
       # Need to manually define the service since this container creates a service
@@ -46,16 +45,18 @@ services:
   postgres:
     labels:
       # Allow access to the Postgres instance from outside
-      - traefik.http.routers.postgres.rule=Host(`${DOMAIN-localhost}`)
+      - traefik.tcp.routers.postgres.rule=Host(`${DOMAIN-localhost}`)
+      - traefik.tcp.routers.postgres.rule=HostSNI(`*`)
       # Make sure the loadbalancer uses the correct port
-      - traefik.http.services.postgres.loadbalancer.server.port=5432
+      - traefik.tcp.services.postgres.loadbalancer.server.port=5432
       # Only access through port 5432
-      - traefik.http.routers.postgres.entrypoints=postgres
+      - traefik.tcp.routers.postgres.entrypoints=postgres
   redis:
     labels:
       # Allow access to the Redis instance from outside
-      - traefik.http.routers.redis.rule=Host(`${DOMAIN-localhost}`)
+      - traefik.tcp.routers.redis.rule=Host(`${DOMAIN-localhost}`)
+      - traefik.tcp.routers.redis.rule=HostSNI(`*`)
       # Make sure the loadbalancer uses the correct port
-      - traefik.http.services.redis.loadbalancer.server.port=6379
+      - traefik.tcp.services.redis.loadbalancer.server.port=6379
       # Only access through port 5432
-      - traefik.http.routers.redis.entrypoints=redis
+      - traefik.tcp.routers.redis.entrypoints=redis
