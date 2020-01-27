@@ -1,12 +1,12 @@
 version: "3.7"
 services:
   redis-exporter:
-    image: oliver006/redis_exporter
+    image: oliver006/redis_exporter:v1.3.5-amd64
   exporter:
-    image: prom/node-exporter:latest
+    image: prom/node-exporter:v0.18.1
   prometheus:
     image: localhost/prometheus:latest
   grafana:
     image: localhost/grafana:latest
   portainer:
-    image: portainer/portainer:latest
+    image: portainer/portainer:1.23.0
