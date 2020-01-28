@@ -21,6 +21,7 @@ Development is made easier through the use of Docker containers and when you are
   - [Starting the development server](#starting-the-development-server)
   - [Stopping the development server](#stopping-the-development-server)
   - [Custom VS Code tasks](#custom-vs-code-tasks)
+  - [Debugging](#debugging)
 - [Setting up Social Providers](#setting-up-social-providers)
   - [Setting up Google Auth](#setting-up-google-auth)
   - [Setting up other social providers](#setting-up-other-social-providers)
@@ -130,6 +131,13 @@ If you are using VS Code there are some custom tasks you can use
 - `Open backend shell`: Executes `python manage.py shell` inside the backend. (Actually its `shell_plus` from [django-extensions](https://django-extensions.readthedocs.io/en/latest/installation_instructions.html))
 - `Restart Backend`: Restarts the backend instances
 - `Restart Frontend`: Restarts the frontend instances
+
+## Debugging
+This template comes with full debug support for VS Code. When you open the project it'll already load 4 debug settings into VS Code. These are
+- `Attach Backend`: Attaches the debugger to the Backend server. (Auto disconnects when backend code changes)
+- `Launch Frontend Client`: Launches a Chrome window with the debugger attached
+- `Attach Frontend Client`: Attaches the debugger to an existing Chrome window that supports debugging
+- `Attach Frontend Server`: Attaches the debugger to the frontend server (not the backend, just the server that does Server Side Rendering)
 
 # Setting up Social Providers
 This template uses [Django allauth](https://django-allauth.readthedocs.io/en/latest/overview.html) and [Django Rest Auth](https://django-rest-auth.readthedocs.io/en/latest/introduction.html) on the backend for social auth. On the frontend, it uses [Nuxt Auth](https://auth.nuxtjs.org/) with a custom provider.
