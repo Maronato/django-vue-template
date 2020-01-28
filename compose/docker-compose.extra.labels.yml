@@ -36,6 +36,9 @@ services:
         - traefik.http.routers.prometheus.tls.certresolver=le
         # Accept only https
         - traefik.http.routers.prometheus.entrypoints=websecure
+        # Lock prometheus behind an authentication layer since it does not have one
+        - traefik.http.routers.prometheus.middlewares=prometheus_service_auth
+        - traefik.http.middlewares.prometheus_service_auth.basicauth.usersfile=/run/secrets/prometheus_users
   portainer:
     deploy:
       labels:
