@@ -333,8 +333,8 @@ this.$auth.user
 this.$auth.user.accounts
 
 // With a user logged in, disconnect an account
-// (Get the account id from this.$auth.user.accounts)
-this.$auth.disconnect(accountId)
+// (Get the account from this.$auth.user.accounts)
+this.$auth.disconnect(account)
 ```
 
 # In Production

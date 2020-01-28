@@ -14,5 +14,7 @@ urlpatterns = [
     # URLs to sign up or login an user with a social login
     path("login/", include((login_urlpatterns, "social"), namespace="login")),
     # Disconnect an account from the user
-    path("disconnect/:id/", SocialAccountDisconnectView.as_view(), name="disconnect"),
+    path(
+        "disconnect/<int:pk>/", SocialAccountDisconnectView.as_view(), name="disconnect"
+    ),
 ]

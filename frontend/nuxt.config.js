@@ -82,7 +82,6 @@ module.exports = {
       callback: '/login/callback',
       home: '/'
     },
-    resetOnError: true,
     strategies: {
       google: {
         _provider: '~/plugins/auth/providers/google.js',

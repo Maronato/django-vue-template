@@ -50,12 +50,13 @@ export default class SocialScheme {
       })
     }
     auth.disconnect = function(account, ...args) {
-      if (!auth.strategy.disconnect) {
-        return Promise.resolve()
-      }
       const { id } = account
       return auth
-        .request(`/auth/social/disconnect/${id}/`)
+        .request({
+          method: 'POST',
+          url: `/auth/social/disconnect/${id}/`,
+          ...args
+        })
         .then(() => auth.fetchUser())
         .catch((error) => {
           this.callOnError(error, { method: 'disconnect' })
@@ -206,9 +207,6 @@ export default class SocialScheme {
     if (state && parsedQuery.state !== state) {
       return
     }
-
-    // eslint-disable-next-line no-debugger
-    debugger
 
     const method = this.$auth.$storage.getUniversal(this.name + '.method')
 
