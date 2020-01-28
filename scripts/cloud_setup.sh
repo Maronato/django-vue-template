@@ -33,6 +33,10 @@ if [ "$USE_EXTRA" = true ]; then
     echo "What is the Grafana password (for the user 'admin')?"
     read GRAFANA_PASS
     echo "$GRAFANA_PASS" > grafana_password
+
+    echo "What is the Prometheus password (for the user 'admin')?"
+    read PROMETHEUS_PASS
+    htpasswd -nb admin "$PROMETHEUS_PASS" > prometheus_users
 fi
 
 echo " Generating stack files..."
