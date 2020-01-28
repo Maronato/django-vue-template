@@ -86,7 +86,6 @@ module.exports = {
     strategies: {
       google: {
         _provider: '~/plugins/auth/providers/google.js',
-        scope: ['openid', 'profile', 'email'],
         client_id: socialProviderSecrets.GOOGLE_CLIENT_ID
       }
     }
