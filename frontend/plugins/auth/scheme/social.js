@@ -54,10 +54,13 @@ export default class SocialScheme {
         return Promise.resolve()
       }
       const { id } = account
-      return auth.request(`/auth/social/disconnect/${id}/`).catch((error) => {
-        this.callOnError(error, { method: 'disconnect' })
-        return Promise.reject(error)
-      })
+      return auth
+        .request(`/auth/social/disconnect/${id}/`)
+        .then(() => auth.fetchUser())
+        .catch((error) => {
+          this.callOnError(error, { method: 'disconnect' })
+          return Promise.reject(error)
+        })
     }
   }
 
