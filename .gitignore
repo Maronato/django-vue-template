@@ -13,6 +13,7 @@ docker-stack-*.yml
 # C extensions
 #
 *.icloud
+.DS_store
 
 
 # Distribution / packaging
