@@ -2,7 +2,7 @@ import nanoid from 'nanoid'
 
 const isHttps = process.server ? require('is-https') : null
 
-export const parseQuery = (queryString) => {
+export const parseQuery = queryString => {
   const query = {}
   const pairs = queryString.split('&')
   for (let i = 0; i < pairs.length; i++) {
@@ -12,7 +12,7 @@ export const parseQuery = (queryString) => {
   return query
 }
 
-export const encodeQuery = (queryObject) => {
+export const encodeQuery = queryObject => {
   return Object.entries(queryObject)
     .filter(([key, value]) => typeof value !== 'undefined')
     .map(
@@ -43,7 +43,7 @@ export default class SocialScheme {
         if (!auth.strategy.connect) {
           return Promise.resolve()
         }
-        return auth.wrapLogin(auth.strategy.connect(...args)).catch((error) => {
+        return auth.wrapLogin(auth.strategy.connect(...args)).catch(error => {
           this.callOnError(error, { method: 'connect' })
           return Promise.reject(error)
         })
@@ -58,7 +58,7 @@ export default class SocialScheme {
           ...args
         })
         .then(() => auth.fetchUser())
-        .catch((error) => {
+        .catch(error => {
           this.callOnError(error, { method: 'disconnect' })
           return Promise.reject(error)
         })

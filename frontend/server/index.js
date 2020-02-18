@@ -25,7 +25,7 @@ async function start() {
     await nuxt.ready()
   }
 
-  app.use((ctx) => {
+  app.use(ctx => {
     consola.log('loading')
     ctx.status = 200
     ctx.respond = false // Bypass Koa's built-in response handling
