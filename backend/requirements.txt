@@ -18,7 +18,7 @@ redis==3.3.11
 
 # REST
 django-cors-headers==3.2.1
-djangorestframework==3.11.0
+djangorestframework==3.11.2
 djangorestframework-simplejwt==4.4.0
 git+https://github.com/ankurpandeyvns/django-rest-auth.git@94c8eba02596f0f2e6589a595eba79109dfd126c
 
